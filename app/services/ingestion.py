@@ -27,5 +27,14 @@ def chunk_text(text: str, chunk_size: int = 200) -> list:
     for i in range(0,len(text),chunk_size):
         chunk = text[i:i+chunk_size]
         chunks.append(chunk)
-        
+
     return chunks
+
+
+def ingest_documents():
+    raw_docs = load_documents()
+    processed_chunks = []
+
+    for doc in raw_docs:
+        chunks = chunk_text(doc['content'])
+        
