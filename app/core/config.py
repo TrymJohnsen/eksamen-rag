@@ -14,4 +14,4 @@ class Settings:
     INDEX_PATH: str = os.getenv("INDEX_PATH", "indexes")
 
 
-settings = Settings()
+settings = Settings() # create an instance of the Settings class, which will load the configuration values from the environment variables and make them available as attributes of the settings object one time
