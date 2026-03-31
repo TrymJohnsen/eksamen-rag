@@ -17,14 +17,6 @@ def health():
     logger.info("Health check called")
     return {"status": "ok"}
 
-
-@router.get("/query")
-def query(q: str):
-    if not q.strip():
-        raise HTTPException(status_code=400, detail="Query parameter 'q' cannot be empty")
-    
-    logger.info(f"Received query: {q}")
-    return run_query(q)
     
 @router.post("/query")
 def query_post(q: str):
