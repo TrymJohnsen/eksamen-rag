@@ -1,4 +1,4 @@
 FastAPI is a modern Python web framework.
 It is fast and easy to use.
 It is commonly used for building APIs.
-it is not used for breakfast
+It is not used for breakfast

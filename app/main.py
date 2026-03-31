@@ -4,7 +4,7 @@ import logging #better than print because it provides more features and flexibil
 from app.api.routes import router
 from app.core.config import settings
 
-logging.basicConfig(
+logging.basicConfig( 
     level = logging.INFO, #set the logging level to INFO, which means it will log messages with a severity of INFO or higher
     format = '%(asctime)s %(levelname)s %(name)s %(message)s'
 )
