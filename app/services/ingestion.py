@@ -1,11 +1,16 @@
 import os
 import app.core.config as config
 
+
 def load_documents():
     documents = []
+    documents_path = config.settings.DOCUMENTS_PATH
 
-    for filename in os.listdir(config.settings.DOCUMENTS_PATH):
-        filepath = os.path.join(config.settings.DOCUMENTS_PATH, filename)
+    if not os.path.isdir(documents_path):
+        return documents
+
+    for filename in os.listdir(documents_path):
+        filepath = os.path.join(documents_path, filename)
 
         if not os.path.isfile(filepath):
             continue
@@ -36,6 +41,15 @@ def ingest_documents():
     processed_chunks = []
 
     for doc in raw_docs:
-        chunks = chunk_text(doc['content'])
-        f
+        chunks = chunk_text(doc["content"])
 
+        for index, chunk in enumerate(chunks):
+            processed_chunks.append(
+                {
+                    "filename": doc["filename"],
+                    "chunk_index": index,
+                    "content": chunk,
+                }
+            )
+
+    return processed_chunks
