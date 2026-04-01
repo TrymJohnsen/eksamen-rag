@@ -26,11 +26,12 @@ def load_documents():
     return documents
 
 
-def chunk_text(text: str, chunk_size: int = 200) -> list:
+def chunk_text(text: str, chunk_size: int | None = None) -> list:
+    chunk_size = chunk_size or config.settings.CHUNK_SIZE
     chunks = []
 
-    for i in range(0,len(text),chunk_size):
-        chunk = text[i:i+chunk_size]
+    for i in range(0, len(text), chunk_size):
+        chunk = text[i:i + chunk_size]
         chunks.append(chunk)
 
     return chunks
