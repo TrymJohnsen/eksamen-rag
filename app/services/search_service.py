@@ -1,5 +1,3 @@
-
-
 def run_query(query: str) -> dict:
     return {
         "query": query,
