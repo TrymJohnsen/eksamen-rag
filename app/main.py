@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import logging
 
 from fastapi import FastAPI
@@ -12,10 +13,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title=settings.APP_NAME)
-app.include_router(router)
-
-
-@app.on_event("startup")
-def log_startup() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     logger.info("Starting %s in %s mode", settings.APP_NAME, settings.APP_ENV)
+    yield
+
+
+app = FastAPI(title=settings.APP_NAME, lifespan=lifespan)
+app.include_router(router)
