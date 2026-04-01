@@ -15,6 +15,7 @@ def _get_int(name: str, default: int) -> int:
     except ValueError:
         return default
 
+    # Reject zero / negative values so callers always get a usable number
     return parsed if parsed > 0 else default
 
 
