@@ -1,5 +1,8 @@
 import os
+import logging
 import app.core.config as config
+
+logger = logging.getLogger(__name__)
 
 
 def load_documents():
@@ -7,21 +10,32 @@ def load_documents():
     documents_path = config.settings.DOCUMENTS_PATH
 
     if not os.path.isdir(documents_path):
+        logger.warning("Documents path does not exist or is not a directory: %s", documents_path)
         return documents
 
     for filename in os.listdir(documents_path):
         filepath = os.path.join(documents_path, filename)
 
         if not os.path.isfile(filepath):
+            logger.debug("Skipping non-file path: %s", filepath)
             continue
 
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        if not filename.lower().endswith(".txt"):
+            logger.info("Skipping unsupported file type: %s", filename)
+            continue
+
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except UnicodeDecodeError:
+            logger.warning("Skipping file with invalid UTF-8 encoding: %s", filename)
+            continue
         
         documents.append({
             "filename" : filename,
             "content" : content
         })
+        logger.info("Loaded document: %s", filename)
 
     return documents
 
