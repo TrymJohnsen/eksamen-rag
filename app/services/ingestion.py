@@ -40,8 +40,12 @@ def load_documents():
     return documents
 
 
-def chunk_text(text: str, chunk_size: int | None = None) -> list:
+def chunk_text(text: str, chunk_size: int | None = None) -> list[str]:
     chunk_size = chunk_size or config.settings.CHUNK_SIZE
+
+    if chunk_size <= 0:
+        raise ValueError("chunk_size must be greater than 0")
+
     chunks = []
 
     for i in range(0, len(text), chunk_size):
@@ -57,6 +61,7 @@ def ingest_documents():
 
     for doc in raw_docs:
         chunks = chunk_text(doc["content"])
+        logger.info("Created %s chunks for document: %s", len(chunks), doc["filename"])
 
         for index, chunk in enumerate(chunks):
             processed_chunks.append(
@@ -66,5 +71,7 @@ def ingest_documents():
                     "content": chunk,
                 }
             )
+
+    logger.info("Created %s chunks from %s documents", len(processed_chunks), len(raw_docs))
 
     return processed_chunks
