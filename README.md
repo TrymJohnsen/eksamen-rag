@@ -14,19 +14,25 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install dependencies:
+3. Install backend dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Create a local `.env` file from the example:
+4. Install ML dependencies for embeddings:
+
+```bash
+pip install -r requirements-ml.txt
+```
+
+5. Create a local `.env` file from the example:
 
 ```bash
 cp .env.example .env
 ```
 
-5. Run the server:
+6. Run the server:
 
 ```bash
 uvicorn app.main:app --reload
