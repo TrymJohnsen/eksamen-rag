@@ -38,4 +38,4 @@ cp .env.example .env
 uvicorn app.main:app --reload
 ```
 
-The app reads host, port, paths, chunk size, and embedding model from environment variables loaded via `.env`.
+The app reads host, port, paths, chunk size, and embedding model from environment variables loaded via `.env`
